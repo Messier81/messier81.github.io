@@ -17,118 +17,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            font-family: 'Georgia', serif;
         }
 
-        .container {
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .heart {
-            font-size: 80px;
-            margin-bottom: 40px;
-            animation: heartbeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.1);
-            }
-            50% {
-                transform: scale(1);
-            }
-        }
-
-        .poem {
-            background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), rgba(255, 69, 0, 0.1));
-            border: 2px solid #ff1493;
-            border-radius: 15px;
-            padding: 50px 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 0 30px rgba(255, 20, 147, 0.3), inset 0 0 30px rgba(255, 20, 147, 0.1);
-        }
-
-        .tamil-text {
-            font-size: 28px;
-            color: #ff69b4;
-            line-height: 2;
-            margin-bottom: 30px;
-            font-weight: 500;
-            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-        }
-
-        .translation {
-            font-size: 16px;
-            color: #ffb6c1;
-            line-height: 1.8;
-            font-style: italic;
-            opacity: 0.9;
-        }
-
-        .translation p {
-            margin-bottom: 12px;
-        }
-
-        .bottom-text {
-            font-size: 32px;
-            color: #ff1493;
-            margin-top: 50px;
-            letter-spacing: 2px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 1;
-            }
+        .emoji {
+            font-size: 200px;
         }
 
         @media (max-width: 600px) {
-            .tamil-text {
-                font-size: 22px;
-                line-height: 1.8;
-            }
-
-            .translation {
-                font-size: 14px;
-            }
-
-            .poem {
-                padding: 30px 20px;
-            }
-
-            .heart {
-                font-size: 60px;
-            }
-
-            .bottom-text {
-                font-size: 24px;
+            .emoji {
+                font-size: 150px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="heart">❤️</div>
-
-        <div class="poem">
-            <div class="tamil-text">
-                உன் கண்களில் உலகம் காணுறேன்<br>
-                உன் புன்னகையில் சொர்க்கம் அறிகிறேன்<br>
-                உன் இதயத்தில் நான் வாழுகிறேன்
-            </div>
-        </div>
-
-        <div class="bottom-text">tonight? ;)</div>
-    </div>
+    <div class="emoji">😠</div>
 </body>
 </html>
