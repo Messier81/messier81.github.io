@@ -6,21 +6,16 @@
     <title>ஜீவிக்குட்டிக்கு</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: #0d0010;
-            min-height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Noto Sans Tamil', serif;
-            overflow-x: hidden;
-            position: relative;
         }
 
         /* ── Starfield ── */
@@ -38,7 +33,7 @@
         }
         @keyframes twinkle {
             from { opacity: 0.1; transform: scale(1); }
-            to   { opacity: 0.9; transform: scale(1.4); }
+            to   { opacity: 0.9; transform: scale(1.5); }
         }
 
         /* ── Floating hearts ── */
@@ -50,45 +45,45 @@
         }
         .heart {
             position: absolute;
-            bottom: -60px;
+            bottom: -50px;
             font-size: var(--size);
             opacity: 0;
             animation: floatUp var(--speed) ease-in var(--delay) infinite;
-            filter: drop-shadow(0 0 6px var(--glow));
+            filter: drop-shadow(0 0 5px var(--glow));
         }
         @keyframes floatUp {
-            0%   { transform: translateY(0)   rotate(0deg)   scale(0.6); opacity: 0; }
-            10%  { opacity: 0.85; }
-            80%  { opacity: 0.6; }
-            100% { transform: translateY(-110vh) rotate(360deg) scale(1.1); opacity: 0; }
+            0%   { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
+            10%  { opacity: 0.8; }
+            80%  { opacity: 0.5; }
+            100% { transform: translateY(-110dvh) rotate(360deg) scale(1.1); opacity: 0; }
         }
 
         /* ── Card ── */
         .card {
             position: relative;
             z-index: 10;
-            max-width: 680px;
-            width: 92%;
-            margin: 60px auto;
-            padding: 52px 44px 56px;
+            width: 96%;
+            max-width: 420px;
+            padding: 14px 20px 12px;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 100, 150, 0.25);
-            border-radius: 24px;
+            border: 1px solid rgba(255, 100, 150, 0.28);
+            border-radius: 20px;
             backdrop-filter: blur(12px);
             box-shadow:
-                0 0 60px rgba(255, 60, 120, 0.18),
-                0 0 120px rgba(180, 0, 80, 0.10),
-                inset 0 0 40px rgba(255, 80, 130, 0.05);
+                0 0 50px rgba(255, 60, 120, 0.2),
+                0 0 100px rgba(180, 0, 80, 0.10),
+                inset 0 0 30px rgba(255, 80, 130, 0.05);
             text-align: center;
         }
 
-        /* top pulsing heart */
+        /* pulsing heart */
         .hero-heart {
-            font-size: 72px;
+            font-size: 38px;
             display: inline-block;
             animation: heartbeat 1.4s ease-in-out infinite;
-            filter: drop-shadow(0 0 18px #ff2060) drop-shadow(0 0 40px #ff0040);
-            margin-bottom: 8px;
+            filter: drop-shadow(0 0 14px #ff2060) drop-shadow(0 0 30px #ff0040);
+            margin-bottom: 2px;
+            line-height: 1;
         }
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
@@ -99,29 +94,29 @@
         }
 
         .dedication {
-            font-size: 13px;
-            letter-spacing: 4px;
+            font-size: 9px;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
-            color: rgba(255, 140, 170, 0.7);
-            margin-bottom: 4px;
+            color: rgba(255, 140, 170, 0.65);
+            margin-bottom: 2px;
         }
 
         .title {
-            font-size: 32px;
+            font-size: 21px;
             font-weight: 600;
             color: #ff6090;
             text-shadow:
-                0 0 20px rgba(255, 60, 100, 0.8),
-                0 0 50px rgba(255, 20, 80, 0.4);
-            margin-bottom: 32px;
-            line-height: 1.4;
+                0 0 16px rgba(255, 60, 100, 0.9),
+                0 0 40px rgba(255, 20, 80, 0.4);
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
 
         .divider {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 36px;
+            gap: 10px;
+            margin-bottom: 9px;
         }
         .divider-line {
             flex: 1;
@@ -129,82 +124,54 @@
             background: linear-gradient(to right, transparent, rgba(255, 80, 120, 0.5), transparent);
         }
         .divider-heart {
-            font-size: 16px;
+            font-size: 13px;
             animation: heartbeat 1.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px #ff2060);
+            filter: drop-shadow(0 0 5px #ff2060);
         }
 
         .poem {
-            color: rgba(255, 220, 235, 0.92);
-            font-size: 18px;
-            line-height: 2.1;
+            color: rgba(255, 218, 232, 0.92);
+            font-size: 13.2px;
+            line-height: 1.62;
             font-weight: 300;
             text-align: center;
         }
 
-        .stanza {
-            margin-bottom: 32px;
-        }
-        .stanza:last-child {
-            margin-bottom: 0;
-        }
+        .stanza { margin-bottom: 8px; }
+        .stanza:last-child { margin-bottom: 0; }
 
         .stanza-line {
             display: block;
-            text-shadow: 0 0 12px rgba(255, 100, 140, 0.3);
-            transition: text-shadow 0.3s;
-        }
-        .stanza-line:hover {
-            text-shadow: 0 0 20px rgba(255, 80, 120, 0.7);
-            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 100, 140, 0.25);
         }
 
         .closing-hearts {
-            margin-top: 44px;
-            font-size: 28px;
-            letter-spacing: 8px;
+            margin-top: 9px;
+            font-size: 18px;
+            letter-spacing: 6px;
             animation: pulse-row 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px #ff2060);
+            filter: drop-shadow(0 0 8px #ff2060);
+            line-height: 1;
         }
         @keyframes pulse-row {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50%       { opacity: 1;   transform: scale(1.06); }
+            0%, 100% { opacity: 0.75; transform: scale(1); }
+            50%       { opacity: 1;    transform: scale(1.05); }
         }
 
         .from {
-            margin-top: 28px;
-            font-size: 12px;
-            letter-spacing: 3px;
+            margin-top: 5px;
+            font-size: 9px;
+            letter-spacing: 2.5px;
             color: rgba(255, 120, 160, 0.5);
             text-transform: uppercase;
-        }
-
-        /* burst hearts that orbit the card */
-        .orbit-heart {
-            position: fixed;
-            font-size: var(--s);
-            pointer-events: none;
-            z-index: 5;
-            animation: orbit var(--t) linear infinite;
-            transform-origin: var(--ox) var(--oy);
-            opacity: 0.55;
-            filter: drop-shadow(0 0 4px #ff2060);
-        }
-        @keyframes orbit {
-            from { transform: rotate(0deg)   translateX(var(--r)) rotate(0deg); }
-            to   { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); }
         }
     </style>
 </head>
 <body>
 
-<!-- Stars -->
 <div class="stars" id="stars"></div>
-
-<!-- Floating hearts background -->
 <div class="hearts-bg" id="heartsContainer"></div>
 
-<!-- Poem card -->
 <div class="card">
     <div class="hero-heart">❤️</div>
 
@@ -261,40 +228,25 @@
 </div>
 
 <script>
-    // ── Stars ──
+    // Stars
     const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 160; i++) {
+    for (let i = 0; i < 130; i++) {
         const s = document.createElement('div');
         s.className = 'star';
-        const size = Math.random() * 2.5 + 0.5;
-        s.style.cssText = `
-            width: ${size}px;
-            height: ${size}px;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            --dur: ${(Math.random() * 3 + 1.5).toFixed(1)}s;
-        `;
+        const size = Math.random() * 2 + 0.5;
+        s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${(Math.random()*3+1.5).toFixed(1)}s;`;
         starsEl.appendChild(s);
     }
 
-    // ── Floating hearts ──
+    // Floating hearts
     const container = document.getElementById('heartsContainer');
     const heartChars = ['❤️','💗','💖','💓','💝','💕','🩷','💞'];
-    const glowColors = ['#ff2060','#ff6090','#ff40a0','#ff80b0','#ff0050','#cc0066'];
-
-    for (let i = 0; i < 28; i++) {
+    const glowColors  = ['#ff2060','#ff6090','#ff40a0','#ff80b0','#ff0050','#cc0066'];
+    for (let i = 0; i < 22; i++) {
         const h = document.createElement('div');
         h.className = 'heart';
-        const char = heartChars[Math.floor(Math.random() * heartChars.length)];
-        const glow = glowColors[Math.floor(Math.random() * glowColors.length)];
-        h.textContent = char;
-        h.style.cssText = `
-            left: ${Math.random() * 100}%;
-            --size: ${(Math.random() * 28 + 14).toFixed(0)}px;
-            --speed: ${(Math.random() * 9 + 7).toFixed(1)}s;
-            --delay: ${(Math.random() * 10).toFixed(1)}s;
-            --glow: ${glow};
-        `;
+        h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+        h.style.cssText = `left:${Math.random()*100}%;--size:${(Math.random()*22+10).toFixed(0)}px;--speed:${(Math.random()*8+7).toFixed(1)}s;--delay:${(Math.random()*10).toFixed(1)}s;--glow:${glowColors[Math.floor(Math.random()*glowColors.length)]};`;
         container.appendChild(h);
     }
 </script>
