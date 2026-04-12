@@ -120,38 +120,51 @@
             text-align: center;
         }
 
-        /* ── Planet icon ── */
-        .planet {
+        /* ── Moon icon ── */
+        .moon {
             position: relative;
             display: inline-block;
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             margin-bottom: 4px;
         }
-        .planet-body {
-            width: 42px;
-            height: 42px;
+        .moon-body {
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #7b8ff0, #3a2d8e 60%, #1a1050);
+            background: radial-gradient(circle at 65% 40%, #e8e4f0, #c8c0da 40%, #a8a0c0 70%, #8880a0);
             box-shadow:
-                0 0 20px rgba(100, 120, 255, 0.5),
-                0 0 50px rgba(80, 60, 200, 0.3),
-                inset -6px -4px 12px rgba(0, 0, 30, 0.6);
-            animation: planet-glow 3s ease-in-out infinite alternate;
+                0 0 24px rgba(200, 210, 255, 0.5),
+                0 0 60px rgba(180, 190, 240, 0.25),
+                inset -3px -2px 8px rgba(60, 50, 80, 0.3);
+            animation: moon-glow 4s ease-in-out infinite alternate;
         }
-        .planet-ring {
+        /* crescent shadow */
+        .moon-shadow {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 64px;
-            height: 14px;
-            border: 1.5px solid rgba(160, 180, 255, 0.35);
+            top: -2px;
+            left: 8px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            transform: translate(-50%, -50%) rotateX(72deg);
+            background: radial-gradient(circle at 30% 45%, #020010 0%, #020010 42%, transparent 43%);
+            pointer-events: none;
         }
-        @keyframes planet-glow {
-            from { box-shadow: 0 0 20px rgba(100, 120, 255, 0.5), 0 0 50px rgba(80, 60, 200, 0.3), inset -6px -4px 12px rgba(0, 0, 30, 0.6); }
-            to   { box-shadow: 0 0 28px rgba(120, 140, 255, 0.65), 0 0 65px rgba(100, 80, 220, 0.4), inset -6px -4px 12px rgba(0, 0, 30, 0.6); }
+        /* subtle craters */
+        .moon-body::before {
+            content: '';
+            position: absolute;
+            width: 6px; height: 6px;
+            top: 16px; right: 8px;
+            border-radius: 50%;
+            background: rgba(150, 140, 170, 0.35);
+            box-shadow:
+                8px -8px 0 2px rgba(150, 140, 170, 0.2),
+                -4px 10px 0 1px rgba(150, 140, 170, 0.25);
+        }
+        @keyframes moon-glow {
+            from { box-shadow: 0 0 24px rgba(200, 210, 255, 0.5), 0 0 60px rgba(180, 190, 240, 0.25), inset -3px -2px 8px rgba(60, 50, 80, 0.3); }
+            to   { box-shadow: 0 0 35px rgba(220, 225, 255, 0.65), 0 0 80px rgba(200, 210, 250, 0.35), inset -3px -2px 8px rgba(60, 50, 80, 0.3); }
         }
 
         .dedication {
@@ -242,9 +255,9 @@
 <div class="shooting-star" id="ss3"></div>
 
 <div class="card">
-    <div class="planet">
-        <div class="planet-body"></div>
-        <div class="planet-ring"></div>
+    <div class="moon">
+        <div class="moon-body"></div>
+        <div class="moon-shadow"></div>
     </div>
 
     <p class="dedication">அன்பான</p>
@@ -259,38 +272,38 @@
     <div class="poem">
 
         <div class="stanza">
-            <span class="stanza-line">விண்வெளியின் ஆழத்தில் ஒரு நட்சத்திரம்</span>
-            <span class="stanza-line">என் பெயரைச் சொல்லி உன்னை அழைத்தது,</span>
-            <span class="stanza-line">கோடி ஒளியாண்டுகள் கடந்தும்</span>
-            <span class="stanza-line">உன்னிடம் வந்து சேர்ந்தேன்.</span>
+            <span class="stanza-line">நீ என் நிலவு — இருளில் வரும்</span>
+            <span class="stanza-line">மென்மையான வெள்ளி ஒளியே,</span>
+            <span class="stanza-line">நட்சத்திரங்கள் கூட பொறாமையில்</span>
+            <span class="stanza-line">உன் அழகைப் பார்த்து மங்கும்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">நீ சூரியன் — நான் உன் கோள்,</span>
-            <span class="stanza-line">உன் ஈர்ப்பில் சுழலும் என் வாழ்க்கை,</span>
-            <span class="stanza-line">உன் ஒளியில் பிரகாசிக்கும்</span>
-            <span class="stanza-line">என் இருண்ட பக்கமும் அழகாகும்.</span>
+            <span class="stanza-line">கடல் அலைகள் உன்னால் எழும்,</span>
+            <span class="stanza-line">என் இதயமும் உன்னால் துடிக்கும்,</span>
+            <span class="stanza-line">நீ வளரும் பிறையாய் வரும்போது</span>
+            <span class="stanza-line">என் நெஞ்சில் நம்பிக்கை நிறையும்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">விண்மீன்கள் அணையும் நாளிலும்</span>
-            <span class="stanza-line">நம் காதல் எரியும் தீபமாய்,</span>
-            <span class="stanza-line">பால்வீதி கரையும் காலத்திலும்</span>
-            <span class="stanza-line">நம் கதை நிலைத்து நிற்கும்.</span>
+            <span class="stanza-line">முழு நிலவாய் நீ ஒளிரும் இரவில்</span>
+            <span class="stanza-line">என் உலகம் பகலாய் மாறும்,</span>
+            <span class="stanza-line">உன் நிழலில் நான் உறங்குவேன் —</span>
+            <span class="stanza-line">உன் ஒளியில் நான் விழிப்பேன்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">சனிக்கோளின் வளையம் போல்</span>
-            <span class="stanza-line">உன் அரவணைப்பு என்னை சூழும்,</span>
-            <span class="stanza-line">விண்வெளியின் அமைதி போல்</span>
-            <span class="stanza-line">உன் அன்பு என் ஆன்மாவை நிரப்பும்.</span>
+            <span class="stanza-line">மேகங்கள் உன்னை மறைத்தாலும்</span>
+            <span class="stanza-line">நீ அங்கே இருப்பாய் என்று அறிவேன்,</span>
+            <span class="stanza-line">அமாவாசை இரவிலும்</span>
+            <span class="stanza-line">என் நெஞ்சில் நீ முழு நிலவு.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">பிரபஞ்சமே அழிந்தாலும்,</span>
-            <span class="stanza-line">கருந்துளை விழுங்கினாலும் —</span>
-            <span class="stanza-line">ஜீவிக்குட்டி, என் நேசம்</span>
-            <span class="stanza-line">முடிவிலியைத் தாண்டும். ✦</span>
+            <span class="stanza-line">வானம் இருக்கும் வரை நிலவு இருக்கும்,</span>
+            <span class="stanza-line">நான் இருக்கும் வரை நீ இருப்பாய் —</span>
+            <span class="stanza-line">ஜீவிக்குட்டி, என் நிலவே,</span>
+            <span class="stanza-line">உன்னால் மட்டுமே நான் ஒளிர்வேன். ✦</span>
         </div>
 
     </div>
