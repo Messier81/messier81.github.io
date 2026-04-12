@@ -9,130 +9,196 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #0d0010;
+            background: #020010;
             height: 100dvh;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Noto Sans Tamil', serif;
+            font-family: 'Noto Sans Tamil', sans-serif;
+        }
+
+        /* ── Deep space background ── */
+        .space-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(40, 0, 80, 0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(0, 20, 80, 0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 80%, rgba(60, 0, 60, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(0, 40, 100, 0.2) 0%, transparent 45%),
+                #020010;
         }
 
         /* ── Starfield ── */
-        .stars {
+        canvas#starfield {
             position: fixed;
             inset: 0;
+            z-index: 1;
             pointer-events: none;
-            z-index: 0;
-        }
-        .star {
-            position: absolute;
-            border-radius: 50%;
-            background: white;
-            animation: twinkle var(--dur) ease-in-out infinite alternate;
-        }
-        @keyframes twinkle {
-            from { opacity: 0.1; transform: scale(1); }
-            to   { opacity: 0.9; transform: scale(1.5); }
         }
 
-        /* ── Floating hearts ── */
-        .hearts-bg {
+        /* ── Shooting stars ── */
+        .shooting-star {
             position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .heart {
-            position: absolute;
-            bottom: -50px;
-            font-size: var(--size);
+            z-index: 2;
+            width: 120px;
+            height: 1.5px;
+            background: linear-gradient(to right, rgba(180, 200, 255, 0.9), transparent);
+            border-radius: 50%;
             opacity: 0;
-            animation: floatUp var(--speed) ease-in var(--delay) infinite;
-            filter: drop-shadow(0 0 5px var(--glow));
+            pointer-events: none;
+            filter: drop-shadow(0 0 4px rgba(150, 180, 255, 0.8));
         }
-        @keyframes floatUp {
-            0%   { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
-            10%  { opacity: 0.8; }
-            80%  { opacity: 0.5; }
-            100% { transform: translateY(-110dvh) rotate(360deg) scale(1.1); opacity: 0; }
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -1px;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(200, 220, 255, 0.9);
         }
+
+        @keyframes shoot {
+            0%   { transform: translateX(0) translateY(0); opacity: 0; }
+            5%   { opacity: 1; }
+            70%  { opacity: 0.6; }
+            100% { transform: translateX(350px) translateY(200px); opacity: 0; }
+        }
+
+        /* ── Orbiting rings ── */
+        .orbit {
+            position: fixed;
+            z-index: 2;
+            border: 1px solid rgba(100, 140, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .orbit-1 {
+            width: 500px; height: 500px;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 60s linear infinite;
+        }
+        .orbit-2 {
+            width: 700px; height: 700px;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 90s linear infinite reverse;
+        }
+        .orbit-dot {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: rgba(150, 180, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(130, 170, 255, 0.6);
+        }
+        .orbit-1 .orbit-dot { top: 0; left: 50%; transform: translate(-50%, -50%); }
+        .orbit-2 .orbit-dot { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+
+        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
         /* ── Card ── */
         .card {
             position: relative;
             z-index: 10;
-            width: 96%;
+            width: 94%;
             max-width: 420px;
-            padding: 14px 20px 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 100, 150, 0.28);
+            padding: 18px 22px 14px;
+            background: rgba(10, 10, 40, 0.55);
+            border: 1px solid rgba(100, 140, 255, 0.18);
             border-radius: 20px;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
             box-shadow:
-                0 0 50px rgba(255, 60, 120, 0.2),
-                0 0 100px rgba(180, 0, 80, 0.10),
-                inset 0 0 30px rgba(255, 80, 130, 0.05);
+                0 0 60px rgba(60, 80, 200, 0.15),
+                0 0 120px rgba(40, 20, 120, 0.08),
+                inset 0 0 40px rgba(60, 80, 180, 0.04);
             text-align: center;
         }
 
-        /* pulsing heart */
-        .hero-heart {
-            font-size: 38px;
+        /* ── Planet icon ── */
+        .planet {
+            position: relative;
             display: inline-block;
-            animation: heartbeat 1.4s ease-in-out infinite;
-            filter: drop-shadow(0 0 14px #ff2060) drop-shadow(0 0 30px #ff0040);
-            margin-bottom: 2px;
-            line-height: 1;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 4px;
         }
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            14%       { transform: scale(1.22); }
-            28%       { transform: scale(1); }
-            42%       { transform: scale(1.12); }
-            56%       { transform: scale(1); }
+        .planet-body {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #7b8ff0, #3a2d8e 60%, #1a1050);
+            box-shadow:
+                0 0 20px rgba(100, 120, 255, 0.5),
+                0 0 50px rgba(80, 60, 200, 0.3),
+                inset -6px -4px 12px rgba(0, 0, 30, 0.6);
+            animation: planet-glow 3s ease-in-out infinite alternate;
+        }
+        .planet-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 64px;
+            height: 14px;
+            border: 1.5px solid rgba(160, 180, 255, 0.35);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotateX(72deg);
+        }
+        @keyframes planet-glow {
+            from { box-shadow: 0 0 20px rgba(100, 120, 255, 0.5), 0 0 50px rgba(80, 60, 200, 0.3), inset -6px -4px 12px rgba(0, 0, 30, 0.6); }
+            to   { box-shadow: 0 0 28px rgba(120, 140, 255, 0.65), 0 0 65px rgba(100, 80, 220, 0.4), inset -6px -4px 12px rgba(0, 0, 30, 0.6); }
         }
 
         .dedication {
             font-size: 9px;
-            letter-spacing: 3.5px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255, 140, 170, 0.65);
+            color: rgba(140, 170, 255, 0.55);
             margin-bottom: 2px;
         }
 
         .title {
             font-size: 21px;
             font-weight: 600;
-            color: #ff6090;
+            color: #a0b4ff;
             text-shadow:
-                0 0 16px rgba(255, 60, 100, 0.9),
-                0 0 40px rgba(255, 20, 80, 0.4);
-            margin-bottom: 8px;
+                0 0 18px rgba(100, 130, 255, 0.8),
+                0 0 45px rgba(60, 80, 200, 0.35);
+            margin-bottom: 10px;
             line-height: 1.3;
         }
 
         .divider {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 9px;
+            gap: 12px;
+            margin-bottom: 10px;
         }
         .divider-line {
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, transparent, rgba(255, 80, 120, 0.5), transparent);
+            background: linear-gradient(to right, transparent, rgba(100, 140, 255, 0.35), transparent);
         }
-        .divider-heart {
-            font-size: 13px;
-            animation: heartbeat 1.8s ease-in-out infinite;
-            filter: drop-shadow(0 0 5px #ff2060);
+        .divider-icon {
+            font-size: 10px;
+            color: rgba(150, 180, 255, 0.7);
+            letter-spacing: 4px;
+            animation: twinkle-text 2s ease-in-out infinite alternate;
+        }
+        @keyframes twinkle-text {
+            from { opacity: 0.6; text-shadow: 0 0 4px rgba(130, 160, 255, 0.4); }
+            to   { opacity: 1; text-shadow: 0 0 10px rgba(130, 160, 255, 0.8); }
         }
 
         .poem {
-            color: rgba(255, 218, 232, 0.92);
+            color: rgba(200, 215, 255, 0.88);
             font-size: 13.2px;
-            line-height: 1.62;
+            line-height: 1.65;
             font-weight: 300;
             text-align: center;
         }
@@ -142,113 +208,162 @@
 
         .stanza-line {
             display: block;
-            text-shadow: 0 0 10px rgba(255, 100, 140, 0.25);
+            text-shadow: 0 0 12px rgba(80, 110, 220, 0.2);
         }
 
-        .closing-hearts {
-            margin-top: 9px;
-            font-size: 18px;
-            letter-spacing: 6px;
-            animation: pulse-row 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px #ff2060);
+        .closing {
+            margin-top: 10px;
+            font-size: 15px;
+            letter-spacing: 8px;
+            color: rgba(160, 180, 255, 0.6);
+            animation: twinkle-text 2.5s ease-in-out infinite alternate;
             line-height: 1;
-        }
-        @keyframes pulse-row {
-            0%, 100% { opacity: 0.75; transform: scale(1); }
-            50%       { opacity: 1;    transform: scale(1.05); }
         }
 
         .from {
-            margin-top: 5px;
+            margin-top: 6px;
             font-size: 9px;
-            letter-spacing: 2.5px;
-            color: rgba(255, 120, 160, 0.5);
+            letter-spacing: 3px;
+            color: rgba(130, 160, 255, 0.4);
             text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-<div class="stars" id="stars"></div>
-<div class="hearts-bg" id="heartsContainer"></div>
+<div class="space-bg"></div>
+<canvas id="starfield"></canvas>
+
+<div class="orbit orbit-1"><div class="orbit-dot"></div></div>
+<div class="orbit orbit-2"><div class="orbit-dot"></div></div>
+
+<div class="shooting-star" id="ss1"></div>
+<div class="shooting-star" id="ss2"></div>
+<div class="shooting-star" id="ss3"></div>
 
 <div class="card">
-    <div class="hero-heart">❤️</div>
+    <div class="planet">
+        <div class="planet-body"></div>
+        <div class="planet-ring"></div>
+    </div>
 
     <p class="dedication">அன்பான</p>
     <h1 class="title">ஜீவிக்குட்டிக்கு</h1>
 
     <div class="divider">
         <div class="divider-line"></div>
-        <span class="divider-heart">💗</span>
+        <span class="divider-icon">✦ ✧ ✦</span>
         <div class="divider-line"></div>
     </div>
 
     <div class="poem">
 
         <div class="stanza">
-            <span class="stanza-line">உன் கண்களில் காணும் வானம்</span>
-            <span class="stanza-line">என் உள்ளத்தின் ஒளியாய் மலரும்,</span>
-            <span class="stanza-line">உன் சிரிப்பில் மழை பொழியும் —</span>
-            <span class="stanza-line">என் ஆன்மா உன்னில் உறைந்திடும்.</span>
+            <span class="stanza-line">விண்வெளியின் ஆழத்தில் ஒரு நட்சத்திரம்</span>
+            <span class="stanza-line">என் பெயரைச் சொல்லி உன்னை அழைத்தது,</span>
+            <span class="stanza-line">கோடி ஒளியாண்டுகள் கடந்தும்</span>
+            <span class="stanza-line">உன்னிடம் வந்து சேர்ந்தேன்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">நட்சத்திரங்கள் மின்னும் இரவில்</span>
-            <span class="stanza-line">உன் நினைவே என் கனவாகும்,</span>
-            <span class="stanza-line">காற்று தழுவும் தருணங்களில்</span>
-            <span class="stanza-line">உன் மூச்சே என் உயிராகும்.</span>
+            <span class="stanza-line">நீ சூரியன் — நான் உன் கோள்,</span>
+            <span class="stanza-line">உன் ஈர்ப்பில் சுழலும் என் வாழ்க்கை,</span>
+            <span class="stanza-line">உன் ஒளியில் பிரகாசிக்கும்</span>
+            <span class="stanza-line">என் இருண்ட பக்கமும் அழகாகும்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">கடல் அலைகள் கரை தொடுவதுபோல்</span>
-            <span class="stanza-line">என் நேசம் உன்னை தழுவும்,</span>
-            <span class="stanza-line">மலர்கள் வாசம் பரப்புவதுபோல்</span>
-            <span class="stanza-line">உன் அன்பு என்னில் வாழும்.</span>
+            <span class="stanza-line">விண்மீன்கள் அணையும் நாளிலும்</span>
+            <span class="stanza-line">நம் காதல் எரியும் தீபமாய்,</span>
+            <span class="stanza-line">பால்வீதி கரையும் காலத்திலும்</span>
+            <span class="stanza-line">நம் கதை நிலைத்து நிற்கும்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">இருளில் என் வழிகாட்டும் விளக்கே,</span>
-            <span class="stanza-line">வலியில் என் மருந்தாகும் தேனே,</span>
-            <span class="stanza-line">வார்த்தைகள் இல்லாத நிமிடங்களில்</span>
-            <span class="stanza-line">நீயே என் மொழி, நீயே என் கவிதை.</span>
+            <span class="stanza-line">சனிக்கோளின் வளையம் போல்</span>
+            <span class="stanza-line">உன் அரவணைப்பு என்னை சூழும்,</span>
+            <span class="stanza-line">விண்வெளியின் அமைதி போல்</span>
+            <span class="stanza-line">உன் அன்பு என் ஆன்மாவை நிரப்பும்.</span>
         </div>
 
         <div class="stanza">
-            <span class="stanza-line">பிறவி பிறவியாய் தேடிய உயிரே,</span>
-            <span class="stanza-line">என் வாழ்வின் மையமே, அர்த்தமே —</span>
-            <span class="stanza-line">ஜீவிக்குட்டி, என் இதயம்</span>
-            <span class="stanza-line">என்றென்றும் உன்னதே. 💓</span>
+            <span class="stanza-line">பிரபஞ்சமே அழிந்தாலும்,</span>
+            <span class="stanza-line">கருந்துளை விழுங்கினாலும் —</span>
+            <span class="stanza-line">ஜீவிக்குட்டி, என் நேசம்</span>
+            <span class="stanza-line">முடிவிலியைத் தாண்டும். ✦</span>
         </div>
 
     </div>
 
-    <div class="closing-hearts">💕 💗 💖 💗 💕</div>
+    <div class="closing">✦ ⋆ ✧ ⋆ ✦</div>
     <p class="from">எப்போதும் உன்னுடையவன்</p>
 </div>
 
 <script>
-    // Stars
-    const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 130; i++) {
-        const s = document.createElement('div');
-        s.className = 'star';
-        const size = Math.random() * 2 + 0.5;
-        s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${(Math.random()*3+1.5).toFixed(1)}s;`;
-        starsEl.appendChild(s);
+    // ── Starfield on canvas ──
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let w, h, stars = [];
+
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Generate stars
+    for (let i = 0; i < 350; i++) {
+        stars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.4 + 0.3,
+            base: Math.random() * 0.5 + 0.3,
+            amp: Math.random() * 0.5 + 0.1,
+            speed: Math.random() * 0.008 + 0.002,
+            phase: Math.random() * Math.PI * 2,
+            hue: Math.random() > 0.7 ? 220 + Math.random() * 40 : 0,
+            sat: Math.random() > 0.7 ? 40 + Math.random() * 30 : 0,
+        });
     }
 
-    // Floating hearts
-    const container = document.getElementById('heartsContainer');
-    const heartChars = ['❤️','💗','💖','💓','💝','💕','🩷','💞'];
-    const glowColors  = ['#ff2060','#ff6090','#ff40a0','#ff80b0','#ff0050','#cc0066'];
-    for (let i = 0; i < 22; i++) {
-        const h = document.createElement('div');
-        h.className = 'heart';
-        h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
-        h.style.cssText = `left:${Math.random()*100}%;--size:${(Math.random()*22+10).toFixed(0)}px;--speed:${(Math.random()*8+7).toFixed(1)}s;--delay:${(Math.random()*10).toFixed(1)}s;--glow:${glowColors[Math.floor(Math.random()*glowColors.length)]};`;
-        container.appendChild(h);
+    function drawStars(t) {
+        ctx.clearRect(0, 0, w, h);
+        for (const s of stars) {
+            const opacity = s.base + Math.sin(t * s.speed + s.phase) * s.amp;
+            if (s.hue) {
+                ctx.fillStyle = `hsla(${s.hue}, ${s.sat}%, 85%, ${opacity})`;
+            } else {
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+            }
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(drawStars);
     }
+    requestAnimationFrame(drawStars);
+
+    // ── Shooting stars ──
+    const ssEls = [document.getElementById('ss1'), document.getElementById('ss2'), document.getElementById('ss3')];
+    function triggerShootingStar() {
+        const el = ssEls[Math.floor(Math.random() * ssEls.length)];
+        const startX = Math.random() * w * 0.6;
+        const startY = Math.random() * h * 0.4;
+        const angle = 25 + Math.random() * 20;
+        const duration = 0.8 + Math.random() * 0.6;
+
+        el.style.left = startX + 'px';
+        el.style.top = startY + 'px';
+        el.style.transform = `rotate(${angle}deg)`;
+        el.style.animation = 'none';
+        el.offsetHeight; // reflow
+        el.style.animation = `shoot ${duration}s ease-out forwards`;
+
+        setTimeout(triggerShootingStar, 2000 + Math.random() * 5000);
+    }
+    setTimeout(triggerShootingStar, 1000);
+    setTimeout(triggerShootingStar, 3500);
 </script>
 </body>
 </html>
