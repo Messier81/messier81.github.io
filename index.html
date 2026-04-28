@@ -1,382 +1,483 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ta">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ஜீவிக்குட்டிக்கு</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0a0a0f" />
+<title>ஒன்பதாவது இரவு</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-2: #131320;
+    --ink: #ece9e1;
+    --ink-dim: #8e8b7e;
+    --accent: #ff5c6a;
+    --accent-2: #ffd166;
+    --rule: #28283a;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: radial-gradient(ellipse at top, #1c0e16 0%, var(--bg) 65%) fixed;
+    color: var(--ink);
+    font-family: "Noto Sans Tamil", "Latha", "Tamil MN", system-ui, sans-serif;
+    line-height: 1.75;
+    min-height: 100vh;
+    overscroll-behavior-y: contain;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(20px, 5vw, 48px) clamp(16px, 5vw, 24px) 96px;
+    padding-left: max(clamp(16px, 5vw, 24px), env(safe-area-inset-left));
+    padding-right: max(clamp(16px, 5vw, 24px), env(safe-area-inset-right));
+  }
 
-        body {
-            background: #020010;
-            height: 100dvh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Noto Sans Tamil', sans-serif;
-        }
+  header {
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: clamp(20px, 4vw, 32px);
+    padding-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  h1 {
+    font-size: clamp(22px, 6vw, 30px);
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--accent);
+    line-height: 1.25;
+  }
+  h1 .sub {
+    color: var(--ink-dim);
+    font-weight: 400;
+    font-size: clamp(13px, 3.2vw, 15px);
+    margin-left: 8px;
+    display: inline-block;
+  }
+  .controls button {
+    background: transparent;
+    color: var(--ink-dim);
+    border: 1px solid var(--rule);
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    min-height: 36px;
+    transition: color .15s, border-color .15s;
+    touch-action: manipulation;
+  }
+  .controls button:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .controls button:active { color: var(--ink); }
 
-        /* ── Deep space background ── */
-        .space-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(40, 0, 80, 0.4) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 30%, rgba(0, 20, 80, 0.35) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 80%, rgba(60, 0, 60, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 70%, rgba(0, 40, 100, 0.2) 0%, transparent 45%),
-                #020010;
-        }
+  #passage { animation: fade .55s ease both; }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
 
-        /* ── Starfield ── */
-        canvas#starfield {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-        }
+  .passage-title {
+    font-size: clamp(11px, 2.8vw, 12px);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-2);
+    margin-bottom: 6px;
+  }
+  .passage-body {
+    font-size: clamp(16px, 4.2vw, 18px);
+  }
+  .passage-body p { margin: 0 0 18px; }
+  .passage-body em { color: #fff; font-style: italic; }
 
-        /* ── Shooting stars ── */
-        .shooting-star {
-            position: fixed;
-            z-index: 2;
-            width: 120px;
-            height: 1.5px;
-            background: linear-gradient(to right, rgba(180, 200, 255, 0.9), transparent);
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            filter: drop-shadow(0 0 4px rgba(150, 180, 255, 0.8));
-        }
-        .shooting-star::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: -1px;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 8px 2px rgba(200, 220, 255, 0.9);
-        }
+  .choices {
+    margin-top: clamp(24px, 5vw, 32px);
+    border-top: 1px solid var(--rule);
+    padding-top: clamp(20px, 4vw, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .choice {
+    text-align: left;
+    background: var(--bg-2);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    font-size: clamp(15px, 4vw, 17px);
+    line-height: 1.55;
+    min-height: 56px;
+    transition: border-color .15s, background .15s, transform .08s;
+    touch-action: manipulation;
+  }
+  .choice:hover {
+    border-color: var(--accent);
+    background: #1a1828;
+  }
+  .choice:active {
+    transform: scale(0.99);
+    background: #1f1c2c;
+    border-color: var(--accent);
+  }
+  .choice .arrow { color: var(--accent); margin-right: 10px; }
 
-        @keyframes shoot {
-            0%   { transform: translateX(0) translateY(0); opacity: 0; }
-            5%   { opacity: 1; }
-            70%  { opacity: 0.6; }
-            100% { transform: translateX(350px) translateY(200px); opacity: 0; }
-        }
+  .ending {
+    margin-top: clamp(24px, 5vw, 32px);
+    padding: clamp(16px, 4vw, 20px);
+    border: 1px solid var(--accent-2);
+    border-radius: 8px;
+    background: rgba(255,209,102,0.06);
+  }
+  .ending .label {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+  }
+  .ending button {
+    margin-top: 14px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    min-height: 40px;
+    touch-action: manipulation;
+  }
+  .ending button:hover { background: rgba(255,92,106,0.1); }
+  .ending button:active { background: rgba(255,92,106,0.18); }
 
-        /* ── Orbiting rings ── */
-        .orbit {
-            position: fixed;
-            z-index: 2;
-            border: 1px solid rgba(100, 140, 255, 0.06);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        .orbit-1 {
-            width: 500px; height: 500px;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            animation: spin 60s linear infinite;
-        }
-        .orbit-2 {
-            width: 700px; height: 700px;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            animation: spin 90s linear infinite reverse;
-        }
-        .orbit-dot {
-            position: absolute;
-            width: 3px; height: 3px;
-            background: rgba(150, 180, 255, 0.5);
-            border-radius: 50%;
-            box-shadow: 0 0 6px rgba(130, 170, 255, 0.6);
-        }
-        .orbit-1 .orbit-dot { top: 0; left: 50%; transform: translate(-50%, -50%); }
-        .orbit-2 .orbit-dot { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+  footer {
+    margin-top: clamp(32px, 6vw, 48px);
+    color: var(--ink-dim);
+    font-size: clamp(11px, 3vw, 12px);
+    text-align: center;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  footer a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px dotted var(--rule); }
+  footer a:hover { color: var(--ink); }
 
-        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        /* ── Card ── */
-        .card {
-            position: relative;
-            z-index: 10;
-            width: 94%;
-            max-width: 420px;
-            padding: 18px 22px 14px;
-            background: rgba(10, 10, 40, 0.55);
-            border: 1px solid rgba(100, 140, 255, 0.18);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            box-shadow:
-                0 0 60px rgba(60, 80, 200, 0.15),
-                0 0 120px rgba(40, 20, 120, 0.08),
-                inset 0 0 40px rgba(60, 80, 180, 0.04);
-            text-align: center;
-        }
-
-        /* ── Moon icon ── */
-        .moon {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 44px;
-            margin-bottom: 4px;
-        }
-        .moon-body {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 65% 40%, #e8e4f0, #c8c0da 40%, #a8a0c0 70%, #8880a0);
-            box-shadow:
-                0 0 24px rgba(200, 210, 255, 0.5),
-                0 0 60px rgba(180, 190, 240, 0.25),
-                inset -3px -2px 8px rgba(60, 50, 80, 0.3);
-            animation: moon-glow 4s ease-in-out infinite alternate;
-        }
-        /* crescent shadow */
-        .moon-shadow {
-            position: absolute;
-            top: -2px;
-            left: 8px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 45%, #020010 0%, #020010 42%, transparent 43%);
-            pointer-events: none;
-        }
-        /* subtle craters */
-        .moon-body::before {
-            content: '';
-            position: absolute;
-            width: 6px; height: 6px;
-            top: 16px; right: 8px;
-            border-radius: 50%;
-            background: rgba(150, 140, 170, 0.35);
-            box-shadow:
-                8px -8px 0 2px rgba(150, 140, 170, 0.2),
-                -4px 10px 0 1px rgba(150, 140, 170, 0.25);
-        }
-        @keyframes moon-glow {
-            from { box-shadow: 0 0 24px rgba(200, 210, 255, 0.5), 0 0 60px rgba(180, 190, 240, 0.25), inset -3px -2px 8px rgba(60, 50, 80, 0.3); }
-            to   { box-shadow: 0 0 35px rgba(220, 225, 255, 0.65), 0 0 80px rgba(200, 210, 250, 0.35), inset -3px -2px 8px rgba(60, 50, 80, 0.3); }
-        }
-
-        .dedication {
-            font-size: 9px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(140, 170, 255, 0.55);
-            margin-bottom: 2px;
-        }
-
-        .title {
-            font-size: 21px;
-            font-weight: 600;
-            color: #a0b4ff;
-            text-shadow:
-                0 0 18px rgba(100, 130, 255, 0.8),
-                0 0 45px rgba(60, 80, 200, 0.35);
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(100, 140, 255, 0.35), transparent);
-        }
-        .divider-icon {
-            font-size: 10px;
-            color: rgba(150, 180, 255, 0.7);
-            letter-spacing: 4px;
-            animation: twinkle-text 2s ease-in-out infinite alternate;
-        }
-        @keyframes twinkle-text {
-            from { opacity: 0.6; text-shadow: 0 0 4px rgba(130, 160, 255, 0.4); }
-            to   { opacity: 1; text-shadow: 0 0 10px rgba(130, 160, 255, 0.8); }
-        }
-
-        .poem {
-            color: rgba(200, 215, 255, 0.88);
-            font-size: 13.2px;
-            line-height: 1.65;
-            font-weight: 300;
-            text-align: center;
-        }
-
-        .stanza { margin-bottom: 8px; }
-        .stanza:last-child { margin-bottom: 0; }
-
-        .stanza-line {
-            display: block;
-            text-shadow: 0 0 12px rgba(80, 110, 220, 0.2);
-        }
-
-        .closing {
-            margin-top: 10px;
-            font-size: 15px;
-            letter-spacing: 8px;
-            color: rgba(160, 180, 255, 0.6);
-            animation: twinkle-text 2.5s ease-in-out infinite alternate;
-            line-height: 1;
-        }
-
-        .from {
-            margin-top: 6px;
-            font-size: 9px;
-            letter-spacing: 3px;
-            color: rgba(130, 160, 255, 0.4);
-            text-transform: uppercase;
-        }
-    </style>
+  @media (max-width: 480px) {
+    header { gap: 8px; }
+    .controls { width: 100%; display: flex; justify-content: flex-end; }
+  }
+</style>
 </head>
 <body>
-
-<div class="space-bg"></div>
-<canvas id="starfield"></canvas>
-
-<div class="orbit orbit-1"><div class="orbit-dot"></div></div>
-<div class="orbit orbit-2"><div class="orbit-dot"></div></div>
-
-<div class="shooting-star" id="ss1"></div>
-<div class="shooting-star" id="ss2"></div>
-<div class="shooting-star" id="ss3"></div>
-
-<div class="card">
-    <div class="moon">
-        <div class="moon-body"></div>
-        <div class="moon-shadow"></div>
+<div class="wrap">
+  <header>
+    <h1>ஒன்பதாவது இரவு <span class="sub">— ஒரு திரில்லர் கதை</span></h1>
+    <div class="controls">
+      <button id="restart">மீண்டும் ஆரம்பி</button>
     </div>
-
-    <p class="dedication">அன்பான</p>
-    <h1 class="title">ஜீவிக்குட்டிக்கு</h1>
-
-    <div class="divider">
-        <div class="divider-line"></div>
-        <span class="divider-icon">✦ ✧ ✦</span>
-        <div class="divider-line"></div>
-    </div>
-
-    <div class="poem">
-
-        <div class="stanza">
-            <span class="stanza-line">நீ என் நிலவு — இருளில் வரும்</span>
-            <span class="stanza-line">மென்மையான வெள்ளி ஒளியே,</span>
-            <span class="stanza-line">நட்சத்திரங்கள் கூட பொறாமையில்</span>
-            <span class="stanza-line">உன் அழகைப் பார்த்து மங்கும்.</span>
-        </div>
-
-        <div class="stanza">
-            <span class="stanza-line">கடல் அலைகள் உன்னால் எழும்,</span>
-            <span class="stanza-line">என் இதயமும் உன்னால் துடிக்கும்,</span>
-            <span class="stanza-line">நீ வளரும் பிறையாய் வரும்போது</span>
-            <span class="stanza-line">என் நெஞ்சில் நம்பிக்கை நிறையும்.</span>
-        </div>
-
-        <div class="stanza">
-            <span class="stanza-line">முழு நிலவாய் நீ ஒளிரும் இரவில்</span>
-            <span class="stanza-line">என் உலகம் பகலாய் மாறும்,</span>
-            <span class="stanza-line">உன் நிழலில் நான் உறங்குவேன் —</span>
-            <span class="stanza-line">உன் ஒளியில் நான் விழிப்பேன்.</span>
-        </div>
-
-        <div class="stanza">
-            <span class="stanza-line">மேகங்கள் உன்னை மறைத்தாலும்</span>
-            <span class="stanza-line">நீ அங்கே இருப்பாய் என்று அறிவேன்,</span>
-            <span class="stanza-line">அமாவாசை இரவிலும்</span>
-            <span class="stanza-line">என் நெஞ்சில் நீ முழு நிலவு.</span>
-        </div>
-
-        <div class="stanza">
-            <span class="stanza-line">வானம் இருக்கும் வரை நிலவு இருக்கும்,</span>
-            <span class="stanza-line">நான் இருக்கும் வரை நீ இருப்பாய் —</span>
-            <span class="stanza-line">ஜீவிக்குட்டி, என் நிலவே,</span>
-            <span class="stanza-line">உன்னால் மட்டுமே நான் ஒளிர்வேன். ✦</span>
-        </div>
-
-    </div>
-
-    <div class="closing">✦ ⋆ ✧ ⋆ ✦</div>
-    <p class="from">எப்போதும் உன்னுடையவன்</p>
+  </header>
+  <main id="passage"></main>
+  <footer>5 பாதைகள் · 8 முடிவுகள் · ஒவ்வொன்றிலும் ஒரு திருப்பம் · <a href="poem.html">கவிதை</a></footer>
 </div>
 
 <script>
-    // ── Starfield on canvas ──
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let w, h, stars = [];
+const STORY = {
+  start: "room",
 
-    function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
+  room: {
+    title: "1 — அறை",
+    body: `
+      <p>நீ கார்த்திக் ராஜன். வயது 28. அண்ணா நகர், சென்னை.</p>
+      <p>இரவு 2:47. ஒரு தொலைபேசி அலறுகிறது.</p>
+      <p>ஆனால் அது உன் தொலைபேசி இல்லை.</p>
+      <p>உன் கட்டிலின் மேல் ஒரு கருப்பு பெட்டி. நேற்று இரவு வரை இது இங்கே இல்லை. பெட்டிக்குள், ஒரு பழைய நோக்கியா — அலறிக் கொண்டிருக்கிறது. மேல் ஒரு ஸ்டிக்கர்: <em>"கார்த்திக். நீ தான் எடுக்கணும்."</em></p>
+      <p>உன் ரூம்மேட் ரவி பக்கத்து அறையில் தூங்கிக் கொண்டிருக்கான். அல்லது நடிக்கிறான். தெரியல.</p>
+    `,
+    choices: [
+      { text: "போனை எடு.", to: "voice" },
+      { text: "ஜன்னல் வழியா ஓடு. இந்த விஷயத்துல சேராதே.", to: "ran_away" }
+    ]
+  },
 
-    // Generate stars
-    for (let i = 0; i < 350; i++) {
-        stars.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            r: Math.random() * 1.4 + 0.3,
-            base: Math.random() * 0.5 + 0.3,
-            amp: Math.random() * 0.5 + 0.1,
-            speed: Math.random() * 0.008 + 0.002,
-            phase: Math.random() * Math.PI * 2,
-            hue: Math.random() > 0.7 ? 220 + Math.random() * 40 : 0,
-            sat: Math.random() > 0.7 ? 40 + Math.random() * 30 : 0,
-        });
-    }
+  ran_away: {
+    title: "முடிவு — ஓட்டம்",
+    ending: true,
+    body: `
+      <p>நீ ஓடினே. தெருவுல. வேகமா. பயத்துல. செருப்பு கூட போடல.</p>
+      <p>இருபது நிமிஷம் ஓடி திரும்பி பார்க்கப்போ — உன் வீடு இல்ல. அந்த தெருவே இல்ல. நீ நின்னுட்டிருக்கும் இடம் — அதே அறை. அதே கட்டில். அதே கருப்பு பெட்டி. போன் இன்னும் அலற.</p>
+      <p>"நீ தான் எடுக்கணும்," ஸ்டிக்கர் சொல்லுது.</p>
+      <p>நீ மறுபடி ஜன்னல் வழியா ஓடற. ஓடி ஓடி திரும்பினா — அதே அறை.</p>
+      <p>அறையில இருந்து வெளியேற வழி... அறைக்குள்ளேதான் இருக்கிறது போல.</p>
+    `
+  },
 
-    function drawStars(t) {
-        ctx.clearRect(0, 0, w, h);
-        for (const s of stars) {
-            const opacity = s.base + Math.sin(t * s.speed + s.phase) * s.amp;
-            if (s.hue) {
-                ctx.fillStyle = `hsla(${s.hue}, ${s.sat}%, 85%, ${opacity})`;
-            } else {
-                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-            }
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        requestAnimationFrame(drawStars);
-    }
-    requestAnimationFrame(drawStars);
+  voice: {
+    title: "2 — குரல்",
+    body: `
+      <p>"கார்த்திக். கேள். உனக்கு மூணு மணி நேரம். யாரையும் நம்பாதே. குறிப்பாக உன்னையே."</p>
+      <p>"யாரு நீ?" உன் வாய் வறண்டு போகுது.</p>
+      <p>"நான் நீயே. அதான் முழு பிரச்சினையும்."</p>
+      <p>லைன் கட்.</p>
+      <p>பெட்டிக்குள்ள இன்னும் இரண்டு பொருள். ஒன்று — ஒரு CCTV பிரிண்ட். உன் முகம். நேற்று இரவு 11:23. T. நகர் சந்தை. கையில ஒரு கத்தி. கத்தியில ரத்தம்.</p>
+      <p>நேற்று இரவு 11:23க்கு நீ வீட்டுல தான் இருந்த. ரவி சாட்சி.</p>
+      <p>இரண்டாவது — ஒரு சாவி. தோலில் முகவரி பதிக்கப்பட்டிருக்கு: <em>12B, கடற்கரை சாலை, வீடு 47.</em></p>
+    `,
+    choices: [
+      { text: "ரவியை எழுப்பு. அவனுக்கு ஏதோ தெரியும்.", to: "ravi" },
+      { text: "காவல்நிலையம் போ. சரியான பாதையில் கையாளு.", to: "police" },
+      { text: "சாவியின் முகவரிக்கு போ. நீயே கண்டுபிடி.", to: "address" }
+    ]
+  },
 
-    // ── Shooting stars ──
-    const ssEls = [document.getElementById('ss1'), document.getElementById('ss2'), document.getElementById('ss3')];
-    function triggerShootingStar() {
-        const el = ssEls[Math.floor(Math.random() * ssEls.length)];
-        const startX = Math.random() * w * 0.6;
-        const startY = Math.random() * h * 0.4;
-        const angle = 25 + Math.random() * 20;
-        const duration = 0.8 + Math.random() * 0.6;
+  ravi: {
+    title: "3 — ரவி",
+    body: `
+      <p>நீ வாசல வந்தவுடனே ரவி கதவை திறக்கறான். கையில காபி. அதிகாலை 4 மணிக்கு.</p>
+      <p>"வந்துட்டியா," அவன் சொல்றான். ஆச்சரியமே இல்ல. கொஞ்சம் சோர்வு மட்டும்.</p>
+      <p>"உனக்கு என்ன ஆகுதுன்னு தெரியுமா?"</p>
+      <p>ரவி காபியை மெதுவா வைக்கிறான். உன்னை சரியா பார்க்கிறான்.</p>
+      <p>"இது எத்தனாவது தடவை நீ இப்படி கேக்கற, கார்த்திக்?"</p>
+      <p>"எத்தனாவது?"</p>
+      <p>"ஒன்பது. இது ஒன்பதாவது இரவு."</p>
+      <p>அவன் சட்டையை இழுத்து உன் தோளில் ஒரு தழும்பை காட்டறான் — நீ அதை பார்த்ததே இல்ல. பழசு. ஆனா பழசு பழசு இல்ல.</p>
+      <p>"ஒவ்வொரு இரவும் ஒரு பெட்டி வருது. ஒவ்வொரு இரவும் நீ ஒரு வேற கதையோட திரும்பி வர. ஒரு இரவு நீ வரவே இல்ல. அன்னிக்கு போலீஸ் வந்து உன்னோட சட்டையை மட்டும் கொண்டு வந்து குடுத்தாங்க."</p>
+    `,
+    choices: [
+      { text: "ரவியை நம்பு. \"எனக்கு உதவி பண்ணு.\"", to: "trust_ravi" },
+      { text: "ரவி பொய் சொல்றான். அவன் இதிலே இருக்கான். தாக்கு.", to: "fight_ravi" },
+      { text: "ஒன்னும் சொல்லாம ஓடு. இவனை நம்ப முடியாது.", to: "address" }
+    ]
+  },
 
-        el.style.left = startX + 'px';
-        el.style.top = startY + 'px';
-        el.style.transform = `rotate(${angle}deg)`;
-        el.style.animation = 'none';
-        el.offsetHeight; // reflow
-        el.style.animation = `shoot ${duration}s ease-out forwards`;
+  trust_ravi: {
+    title: "முடிவு — டயரி",
+    ending: true,
+    body: `
+      <p>"உதவி பண்ணு," நீ சொல்றே.</p>
+      <p>ரவி நெடுமூச்சு விடற. ஒரு டிராயரிலிருந்து ஒரு புத்தகம் எடுக்கிறான். உனக்கு அறிமுகமான கையெழுத்து — உன் கையெழுத்து.</p>
+      <p>"நீ எழுதின டயரி. ஒவ்வொரு இரவும். எட்டு இரவு."</p>
+      <p>அவன் ஒரு பக்கத்தை திறக்கிறான். நீ படிக்கற.</p>
+      <p><em>"ஒன்பதாவது இரவு வந்தா — ரவியை நம்பு. அதான் முக்கியம். அவன் உன் தம்பி அல்ல, நண்பன் அல்ல, ஆனா நம்பத்தக்கவன். கருவியை அழிக்க அவனுக்கு மட்டும் தான் தெரியும். ஆனா நீ முதல் ஏழு இரவும் அவனை சந்தேகப்பட்டே. அதனால தான் நீ எட்டு தடவை இறந்தே."</em></p>
+      <p>நீ பக்கங்களை புரட்டுற. ஒவ்வொரு இரவும் ஒரு குறிப்பு. ஒவ்வொரு இரவும் வேற வேற பாதை. ஒவ்வொரு இரவும் — மரணம். ஒன்பது இரவு, எட்டு மரணம்.</p>
+      <p>"இது சுழல், கார்த்திக். யாரோ உன்னை சுழலில் வச்சிருக்காங்க. ஆனா நீ ஒவ்வொரு இரவும் கொஞ்சம் கொஞ்சமா ஞாபகம் வைச்சிக்கற. டயரி வழியா. பத்தாவது இரவு — நாளைக்கு — நீ வெளியேற முடியும்."</p>
+      <p>"நாளைக்கு என்ன பண்ணணும்?"</p>
+      <p>ரவி சிரிக்கிறான். "அதான் இன்னிக்கு எழுதணும். நீ உனக்கே."</p>
+      <p>நீ பேனா எடுக்கற. சூரியன் உதிக்கப் போகுது. முதல் தடவையா, நீ அமைதியா இருக்க.</p>
+    `
+  },
 
-        setTimeout(triggerShootingStar, 2000 + Math.random() * 5000);
-    }
-    setTimeout(triggerShootingStar, 1000);
-    setTimeout(triggerShootingStar, 3500);
+  fight_ravi: {
+    title: "முடிவு — தம்பி",
+    ending: true,
+    body: `
+      <p>நீ ரவியை தாக்குற. அவன் எதிர்க்கல. காப்பாத்தற கைகளை மட்டும் தூக்குறான்.</p>
+      <p>"கார்த்திக் — வேண்டா — நான்தான் — "</p>
+      <p>தாமதம். அவன் தலை சுவற்றில் முட்டி, கீழே விழுகிறான். ரத்தம். நிறைய.</p>
+      <p>அவன் கையில் ஒரு காகிதம். நீ எடுத்து படிக்கற.</p>
+      <p><em>"கார்த்திக், நீ இதை படிக்கற நேரம், நான் இறந்திருப்பேன். கவலை இல்ல. நான் ஒவ்வொரு இரவும் இறக்கிறேன். யாரை நம்பணும், யாரை நம்பக் கூடாதுன்னு உனக்கே தெரியணும். நான் உன் ரூம்மேட் இல்ல. நான் உன் தம்பி. ரவி. நீ எட்டு வயசுல எனக்கு செஞ்ச அந்த விஷயத்தை மறந்திருக்க — அதான் இந்த சுழல். கடற்கரை. அலை. நீ என் கையை விட்டுட்ட. ஞாபகம் வச்சிக்கோ. அடுத்த இரவு வரும்."</em></p>
+      <p>பின்னால் சத்தம். ரவி எழுந்து நிக்கிறான். மறுபடி. சுவத்துல ரத்தம் இல்ல.</p>
+      <p>"வந்துட்டியா," அவன் சொல்றான். "காபி வேணுமா?"</p>
+      <p>இரவு 2:47. போன் அலறுது. மறுபடி.</p>
+    `
+  },
+
+  police: {
+    title: "4 — காவல்நிலையம்",
+    body: `
+      <p>இன்ஸ்பெக்டர் சண்முகம். நைட் ஷிப்ட். கண் கீழே கருப்பு வளையம். டேபிளுல மூணு டீ கப் — மூணும் காலியா இல்ல.</p>
+      <p>உன்னை பார்த்தவுடன் அவன் முதுகு நிமிர்ற. கூர்மையா.</p>
+      <p>"கார்த்திக் ராஜன்?"</p>
+      <p>"ஆமா சார். எனக்கு—"</p>
+      <p>அவன் ஒரு கோப்பை திறக்கறான். உன் முகம். வாண்டெட் போஸ்டர். நேற்று இரவின் கொலை. போஸ்டர்ல கையெழுத்து: உன் கையெழுத்து.</p>
+      <p>"சார், எனக்கு எதுவுமே ஞாபகம்—"</p>
+      <p>"எல்லாரும் அதே சொல்றாங்க." அவன் கைகுண்டை மெதுவா எடுக்கிறான். ஆனா — ஒரு நொடி — அவன் கண்களில் ஏதோ பளிச்சுது. பயம். உன்னை பார்த்து அல்ல. உனக்கு பின்னால் ஏதோ.</p>
+      <p>நீ திரும்பி பார்க்கற. ஒன்னும் இல்ல. ஆனா அவன் இன்னும் பயப்படறான்.</p>
+    `,
+    choices: [
+      { text: "ஓடு. இப்போவே. கதவு பக்கம்.", to: "address" },
+      { text: "கைது ஆகு. முழு உண்மையும் சொல்லு.", to: "confess" },
+      { text: "\"சார், உங்களுக்கு என்ன பயம்?\" — நேரா கேள்.", to: "inspector_truth" }
+    ]
+  },
+
+  confess: {
+    title: "முடிவு — விசாரணை அறை",
+    ending: true,
+    body: `
+      <p>நீ உட்கார்ந்து எல்லாம் சொல்றே. பெட்டி. போன். குரல். சாவி. நீ அந்த T. நகர் சந்தைக்கு போகவே இல்ல. ரவி சாட்சி.</p>
+      <p>சண்முகம் கேக்கறான். எழுதலை. பேப்பர் இல்ல டேபிள்ல.</p>
+      <p>நீ முடிக்கப்போற நேரம், அவன் சொல்றான், மிக சாதாரணமா:</p>
+      <p>"கார்த்திக். ரவி இரண்டு வருஷம் முன்னாடியே இறந்திட்டான்."</p>
+      <p>நீ பேசாம இருக்க.</p>
+      <p>"ஒரு கார் விபத்து. நீ ஓட்டினே. அன்னிக்கு இரவு 11:23. T. நகர் சந்தை. நீ காயம் பட்டு, ஞாபகம் இழந்த. டாக்டர்கள் சொன்னாங்க — உன் மனசு ஒரு கதை சொல்லிக்கணும். யாரோ உன்னை வேட்டையாடுறாங்கன்னு. ரவி உன்கூட இருக்கான்னு. இல்லேன்னா நீ இறந்துடுவேன்னு."</p>
+      <p>அவன் ஒரு ஃபைலை திறக்கறான். உன் சைக்கியாட்ரிஸ்ட். உன் ஒப்பந்தம். <em>"என்னை ஒன்பது நாள் முன்னாடி டிஸ்சார்ஜ் பண்ணுங்க."</em> உன் கையெழுத்து.</p>
+      <p>"நீ வீட்டுக்கு போனே. ஒரு போனை எடுத்தே. உன் சொந்த குரலை கேட்டே. ஒன்பது இரவா."</p>
+      <p>"ஒன்பது இரவு என்ன ஆச்சு?"</p>
+      <p>சண்முகம் சிரிக்கிறான். கொஞ்சம் வருத்தமா. "ஒவ்வொரு இரவும் நீ இங்க வந்து உட்காருற. ஒவ்வொரு இரவும் இதே கேக்கற. நாளைக்கு வந்து மறுபடி கேப்ப."</p>
+      <p>போன் அலற ஆரம்பிக்குது. அவன் டேபிள்ல. அந்த பழைய நோக்கியா.</p>
+      <p>"உனக்கு தான்," அவன் சொல்றான்.</p>
+    `
+  },
+
+  inspector_truth: {
+    title: "முடிவு — மூணாவது டீ",
+    ending: true,
+    body: `
+      <p>"சார், உங்களுக்கு என்ன பயம்?"</p>
+      <p>சண்முகம் கைகுண்டை வச்சிட்டு உன்னை சரியா பார்க்கிறான். அவன் உதடு அதிர்கிறது.</p>
+      <p>"நீ இங்க இரண்டாவது தடவை வருற, கார்த்திக்."</p>
+      <p>"இல்ல சார், இது முதல் தடவை—"</p>
+      <p>"இன்னிக்கு இரவு. முதல் தடவை 11:43க்கு. இரண்டாம் தடவை இப்போ — 4:18."</p>
+      <p>அவன் CCTV திரையை திருப்பறான். உண்மை. நீ. மூணு மணி நேரம் முன்னாடி. அதே சேர்ட். அதே முகம். நீ சண்முகத்திட்ட ஏதோ குடுக்கற. பின்னால் ஓடற.</p>
+      <p>"நீ எனக்கு என்ன குடுத்த அந்த முதல் தடவை?"</p>
+      <p>சண்முகம் டிராயர் திறக்கறான். ஒரு சாவி. முகவரி: 12B, கடற்கரை சாலை, வீடு 47.</p>
+      <p>"நீயே சொன்ன — 'இதை வச்சிக்கோங்க சார். மூணு மணி நேரம் கழிச்சு நான் வருவேன். அதே ஆள் இல்ல. ஆனா இதே முகம். அவன்கிட்ட இதை குடுத்துடாதீங்க. அவன் கொலையாளி.'"</p>
+      <p>நீ பேசாம இருக்க.</p>
+      <p>"ஆனா எனக்கு — இப்போ நிக்கும் உனக்கு — எதுவுமே ஞாபகம் இல்ல, இல்லையா?"</p>
+      <p>நீ தலை அசைக்கற. இல்ல.</p>
+      <p>அவன் சாவியை மறுபடி வச்சிக்கறான். கைகுண்டை மறுபடி எடுக்கறான். இந்த தடவை உன் மேல குறி.</p>
+      <p>"வருத்தம் கார்த்திக். நீ எனக்கே குடுத்த உத்தரவு."</p>
+    `
+  },
+
+  address: {
+    title: "5 — வீடு 47",
+    body: `
+      <p>கடற்கரை சாலை. பழைய பங்களா. சாவி வேலை செய்யுது.</p>
+      <p>உள்ள — உன் சொந்த வீடு. அதே சோபா. அதே கட்டில். அதே கருப்பு பெட்டி. அதே போன், அலற.</p>
+      <p>நீ இந்த இடத்துல வாழ்ந்ததே இல்ல.</p>
+      <p>சமையல் அறையிலிருந்து சத்தம். யாரோ காபி போடற. குடல் காபி வாசம்.</p>
+      <p>நீ எட்டிப் பார்க்கற.</p>
+      <p>நீயே நிக்கற. வேற சேர்ட். கொஞ்சம் வயசான முகம். கண் கீழே கருப்பு வளையம். சோர்வு. ரொம்ப அதிக சோர்வு.</p>
+      <p>அவன் திரும்பற. உன்னை பார்க்கற. சாதாரணமா — மிக சாதாரணமா — சிரிக்கிறான்.</p>
+      <p>"வந்துட்டியா. காபி வேணுமா? நான் உனக்கு பிடிச்சபடி போடறேன் — சர்க்கரை அதிகம், பாட்டி பாணி."</p>
+      <p>உனக்கு மட்டும் தெரிஞ்ச விஷயம்.</p>
+    `,
+    choices: [
+      { text: "\"ஆமா.\" உட்காரு. கேள்.", to: "coffee" },
+      { text: "\"நீ யாரு?\" — கூச்சல் போடு.", to: "who_are_you" },
+      { text: "தாக்கு. இவன் இம்போஸ்டர்.", to: "attack_self" }
+    ]
+  },
+
+  coffee: {
+    title: "முடிவு — காபி",
+    ending: true,
+    body: `
+      <p>நீ உட்காருற. அவன் காபி குடுக்கறான். சர்க்கரை அதிகம். உன் பாட்டி பாணி.</p>
+      <p>"நான் உனக்கு 20 வருஷம் முந்தினவன்," அவன் சொல்றான். "ஆனா நீ எனக்கு 20 வருஷம் முன்னவன் இல்ல."</p>
+      <p>"புரியல."</p>
+      <p>"நிஜமான கார்த்திக் — நம்ம இருவரோட மூலம் — அவன் 20 வருஷம் முன்னாடியே இறந்தான். கடற்கரையில். விளையாடுறப்போ. தம்பியை காப்பாத்த போய்."</p>
+      <p>"நான்—"</p>
+      <p>"நீ ஒரு நினைவு. நானும் ஒரு நினைவு. அவன் அம்மா அவனை விட்டுவிட விரும்பல. அவ ஒரு கருவியை வாங்கினா. ஒரு பழசு கருவி. ஒவ்வொரு இரவும் அந்த கருவி உன்னை உருவாக்குது. மூணு மணி நேரத்துக்கு. கொஞ்சம் வளர்த்து. கொஞ்சம் கதை குடுத்து. பின்னாடி... அழிஞ்சு போற. மறுபடி."</p>
+      <p>"நீ எப்படி இருக்க இங்க?"</p>
+      <p>அவன் சிரிக்கிறான். "நான் ஒரு பிழை. ஒரு இரவு கருவி தாமதமா ஓடியது. நான் அழியல. அதிலிருந்து இங்கேயே இருக்கேன். உன்னை எச்சரிக்க."</p>
+      <p>"எச்சரிக்க — எதை?"</p>
+      <p>"5:47க்கு கருவி உன்னை அழிக்கும். அல்லது — நீ கருவியை அழிக்கலாம். ஆனா அப்போ அம்மா — அவ உண்மைக்கு திரும்ப வேண்டியிருக்கும். அவளுக்கு மகன் இல்ல. தம்பியும் இல்ல. அவ வாழ முடியாது."</p>
+      <p>நீ காபியை குடிக்கற. கடிகாரம் 5:31.</p>
+      <p>நீ முடிவு பண்ணணும். ஒரு மகன் இல்லாத அம்மா. ஒரு அம்மா இல்லாத மகன். அல்லது — மறுபடி. ஒன்பதாவது இரவு. பத்தாவது. நூறாவது.</p>
+      <p>நீ எழுந்து நிக்கற. பழைய கார்த்திக்கின் கையை பிடிக்கற.</p>
+      <p>"நாம இரண்டும் போகலாம்."</p>
+      <p>5:47. போன் அலற ஆரம்பிக்குது. நீங்க இருவரும் எடுக்கறதில்ல.</p>
+      <p>போன் சத்தம் நிக்குது. முதல் தடவை, ஒன்பது இரவில். வெளியில மழை ஆரம்பிக்குது. உண்மையான மழை. செயற்கை இல்ல.</p>
+    `
+  },
+
+  who_are_you: {
+    title: "முடிவு — பழைய நிழல்",
+    ending: true,
+    body: `
+      <p>"நீ யாரு?!"</p>
+      <p>அவன் காபி கப்பை மெதுவா வைக்கிறான். சிரிப்பு மறையுது. சோர்வு மட்டும் மிஞ்சுது.</p>
+      <p>"நான் கார்த்திக். நிஜமான கார்த்திக். 20 வருஷமா இங்க தான் இருக்கேன்."</p>
+      <p>"இல்ல. நான் தான் கார்த்திக்."</p>
+      <p>"நீ ஒரு நகல். ஒன்பதாவது நகல். ஒவ்வொரு இரவும் ஒன்னு வருது. ஒவ்வொரு இரவும் நான் சொல்லணும் — இன்னும் ஒரு நீ. இன்னும் ஒரு கதை. இன்னும் ஒரு வேட்கை."</p>
+      <p>அவன் ஜன்னல் திறக்கறான். வெளியில — விடியல் இல்ல. வெறும் கருப்பு. நட்சத்திரம் இல்லாம. நிலா இல்லாம. வெறும் சுவர்.</p>
+      <p>"இது வீடு இல்ல. இது அறை. அவ எங்களை இங்க வச்சிருக்கா. அம்மா. அவளுக்கு ஒரே மகன் போதாது. அவ ஒன்பது மகன்களை வச்சிருக்கா. பத்தாவது வாரப்போற."</p>
+      <p>நீ ஓட நினைக்கற. ஆனா எங்க? கதவு திறக்கப்போ — அதே அறை. திரும்ப. மறுபடி.</p>
+      <p>"வா," பழைய கார்த்திக் சொல்றான். "காபி குடி. அம்மாவ பத்தி பேசுவோம். ஆறு மணி நேரம் தான் இருக்கு பத்தாவதுக்கு. அப்புறம் நாம பத்துப் பேர் ஆவோம். கூட்டம் கூடினா கொஞ்சம் சுவாரஸ்யமா இருக்கும்."</p>
+    `
+  },
+
+  attack_self: {
+    title: "முடிவு — கண்ணாடி",
+    ending: true,
+    body: `
+      <p>நீ அவன் மேல் பாய்ற. அவன் ஒன்னும் பண்றதில்ல. நீ அவனை பிடிக்கற. அவன் கண்களை பார்க்கற.</p>
+      <p>உன் கண்கள் தான்.</p>
+      <p>உன் கைகள் அவனை தொடற நொடி — உள்ள ஏதோ மாறுது. ஒரு பெயர். ஒரு முகம். உன் அம்மா. நீ எட்டு வயசு. கடற்கரை. ஒரு அலை. உன் தம்பி ரவி. நீ அவன் கையை விட்டுட்ட. மூணு நொடி. மூணு நொடியில அவன் போயிட்டான்.</p>
+      <p>நீ அழுற. ஒன்பதாவது அழுகை. அல்லது நூறாவது. தெரியல.</p>
+      <p>பெட்டி திறக்கற. இந்த தடவை உள்ள போன் இல்ல. ஒரு கண்ணாடி. நீ பார்க்கற. கண்ணாடியில் உன் முகம் இல்ல. ரவியோட முகம். எட்டு வயசு. நனைஞ்சு. பயப்பட்டு.</p>
+      <p>"அண்ணா," ரவி சொல்றான். "வந்துட்டியா? இவ்ளோ நாள் ஆச்சே."</p>
+      <p>"ஏன் வரல?"</p>
+      <p>"நீ உன்னையே மன்னிக்கல. அதான். நான் காத்திருந்தேன், அண்ணா. ஒன்பது இரவு. ஒன்பது வாய்ப்பு. நீ ஒவ்வொரு தடவையும் வேற யாரையாவது குற்றம் சொல்ல முயற்சி பண்ணினே."</p>
+      <p>"இந்த தடவை?"</p>
+      <p>"இந்த தடவை நீ உன்னையே தாக்கினே. அதான் முதல் தடவையா நிஜம். அம்மா செஞ்ச கருவி பொய்யான பாதையை மட்டும் தான் தடுத்தது. சத்தியமான பாதை — இது."</p>
+      <p>நீ கண்ணாடியில் கையை வைக்கற. ரவி அவன் கையை வைக்கறான். கண்ணாடி உருகுது.</p>
+      <p>"வா அண்ணா. இவ்ளோ வருஷமா நான் தனியா இருந்தேன்."</p>
+      <p>நீ உள்ள போற. கதவு மூடுது. போன், கடைசியா, அமைதியா இருக்கு.</p>
+      <p>இரவு 2:47ல, ஒரு அம்மா — பல வருஷமா முதல் தடவை — நிம்மதியா தூங்குறா.</p>
+    `
+  }
+};
+
+const root = document.getElementById("passage");
+
+function render(key) {
+  const node = STORY[key];
+  if (!node) return;
+
+  const titleHtml = `<div class="passage-title">${node.title}</div>`;
+  const bodyHtml = `<div class="passage-body">${node.body}</div>`;
+
+  let tail = "";
+  if (node.ending) {
+    tail = `
+      <div class="ending">
+        <div class="label">END</div>
+        <div>இந்த பாதை முடிஞ்சது. வேற ஒன்னு முயற்சி பண்ணணுமா?</div>
+        <button data-action="restart">மீண்டும் ஆரம்பி</button>
+      </div>
+    `;
+  } else if (node.choices) {
+    const buttons = node.choices.map((c) =>
+      `<button class="choice" data-to="${c.to}"><span class="arrow">➤</span>${c.text}</button>`
+    ).join("");
+    tail = `<div class="choices">${buttons}</div>`;
+  }
+
+  root.innerHTML = titleHtml + bodyHtml + tail;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  history.replaceState(null, "", "#" + key);
+}
+
+root.addEventListener("click", (e) => {
+  const choice = e.target.closest(".choice");
+  if (choice) {
+    render(choice.dataset.to);
+    return;
+  }
+  if (e.target.dataset.action === "restart") {
+    render(STORY.start);
+  }
+});
+
+document.getElementById("restart").addEventListener("click", () => render(STORY.start));
+
+const fromHash = location.hash.replace("#", "");
+render(STORY[fromHash] ? fromHash : STORY.start);
 </script>
 </body>
 </html>
